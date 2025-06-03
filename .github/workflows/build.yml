@@ -22,6 +22,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install pyinstaller
 
+      # Add this if you use requirements.txt
+      # - name: Install project requirements
+      #   run: pip install -r requirements.txt
+
       - name: Build executable
         run: |
           pyinstaller --onefile --windowed "Notes.py"
@@ -30,14 +34,17 @@ jobs:
         run: dir dist
 
       - name: Check if Notes.exe exists
+        id: check_exe
         run: |
-          if exist dist/Notes.exe (
+          if exist dist\Notes.exe (
             echo "Notes.exe exists"
           ) else (
-            echo "Notes.exe does not exist" && exit 1
+            echo "Notes.exe does not exist"
+            exit 1
           )
 
       - name: Upload artifact
+        if: steps.check_exe.outcome == 'success'
         uses: actions/upload-artifact@v3
         with:
           name: Notes-exe
