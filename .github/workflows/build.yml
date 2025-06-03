@@ -26,8 +26,16 @@ jobs:
         run: |
           pyinstaller --onefile --windowed "Notes.py"
 
-      - name: Verify dist directory contents
+      - name: List dist directory contents
         run: dir dist
+
+      - name: Check if Notes.exe exists
+        run: |
+          if exist dist/Notes.exe (
+            echo "Notes.exe exists"
+          ) else (
+            echo "Notes.exe does not exist" && exit 1
+          )
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
