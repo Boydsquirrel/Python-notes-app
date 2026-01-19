@@ -31,17 +31,18 @@ jobs:
           pyinstaller --onefile --windowed "Notes.py"
 
       - name: List dist directory contents
-        run: dir dist
+        run: |
+          Get-ChildItem dist
 
       - name: Check if Notes.exe exists
         id: check_exe
         run: |
-          if exist dist\Notes.exe (
-            echo Notes.exe exists
-          ) else (
-            echo Notes.exe does not exist
+          if (Test-Path "dist\Notes.exe") {
+            Write-Output "Notes.exe exists"
+          } else {
+            Write-Output "Notes.exe does not exist"
             exit 1
-          )
+          }
 
       - name: Upload artifact
         if: steps.check_exe.outcome == 'success'
