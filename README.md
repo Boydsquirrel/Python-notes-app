@@ -1,3 +1,4 @@
 # Python-notes-app
 
-requires pygame and python
+download and just run the exe for a simple experiance but if you want to have a look at the code i have provided it
+
